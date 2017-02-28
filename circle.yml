@@ -8,12 +8,7 @@ machine:
   node:
     version: 6.2.0
   environment:
-    PATH: "~/$CIRCLE_PROJECT_REPONAME/gradle-2.9/bin:/home/ubuntu/buck/bin:$PATH"
     TERM: "dumb"
-    ADB_INSTALL_TIMEOUT: 10
-    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx512m -XX:+HeapDumpOnOutOfMemoryError"'
-  java:
-    version: 'oraclejdk8'
 
 dependencies:
   override:
@@ -31,7 +26,7 @@ dependencies:
 test:
   override:
     - ./scripts/objc-test-ios.sh
-    
+
     # JS tests for dependencies installed with npm3
     - npm run flow -- check
     - npm test -- --maxWorkers=1
