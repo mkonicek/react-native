@@ -3,16 +3,14 @@
 # This script contains common code to be run from scripts/objc-test-ios.sh or scripts/objc-test-tvos.sh
 
 # Start the packager and preload the UIExplorerApp bundle for better performance in integration tests
-open "./packager/launchPackager.command" || echo "Can't start packager automatically"
-open "./IntegrationTests/launchWebSocketServer.command" || echo "Can't start web socket server automatically"
+
+fork() { ("$@" &); }
+
+fork ./packager/packager.sh
 sleep 60
 curl 'http://localhost:8081/Examples/UIExplorer/js/UIExplorerApp.ios.bundle?platform=ios&dev=true' -o temp.bundle
 rm temp.bundle
 curl 'http://localhost:8081/Examples/UIExplorer/js/UIExplorerApp.ios.bundle?platform=ios&dev=true&minify=false' -o temp.bundle
-rm temp.bundle
-curl 'http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true' -o temp.bundle
-rm temp.bundle
-curl 'http://localhost:8081/IntegrationTests/RCTRootViewIntegrationTestApp.bundle?platform=ios&dev=true' -o temp.bundle
 rm temp.bundle
 
 function cleanup {
