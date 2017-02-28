@@ -5,8 +5,9 @@ general:
 machine:
   xcode:
     version: 8.2.1
-  node:
-    version: 6.2.0
+  # Setting node version is not supported on OSX containers on Circle
+  #node:
+  #  version: 6.2.0
   environment:
     TERM: "dumb"
 
@@ -16,9 +17,6 @@ dependencies:
     - npm config set spin=false
     - npm config set progress=false
     - npm install
-    # for eslint bot
-    - npm install github@0.2.4
-    - cd website && npm install
   cache_directories:
     - "website/node_modules"
     - "node_modules"
@@ -26,11 +24,6 @@ dependencies:
 test:
   override:
     - ./scripts/objc-test-ios.sh
-
-    # JS tests for dependencies installed with npm3
-    - npm run flow -- check
-    - npm test -- --maxWorkers=1
-
     
   post:
     # copy test report for Circle CI to display
