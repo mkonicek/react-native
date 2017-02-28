@@ -5,7 +5,7 @@
 # Start the packager and preload the UIExplorerApp bundle for better performance in integration tests
 open "./packager/launchPackager.command" || echo "Can't start packager automatically"
 open "./IntegrationTests/launchWebSocketServer.command" || echo "Can't start web socket server automatically"
-sleep 20
+sleep 60
 curl 'http://localhost:8081/Examples/UIExplorer/js/UIExplorerApp.ios.bundle?platform=ios&dev=true' -o temp.bundle
 rm temp.bundle
 curl 'http://localhost:8081/Examples/UIExplorer/js/UIExplorerApp.ios.bundle?platform=ios&dev=true&minify=false' -o temp.bundle
